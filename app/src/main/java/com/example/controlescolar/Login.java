@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.example.controlescolar.Crypt.EncryptoAes;
+import com.example.controlescolar.LocalStorage.DbLite;
 import com.example.controlescolar.LocalStorage.SessionControl;
 import com.example.controlescolar.Model.LoginResponse;
 import com.example.controlescolar.Ws.Dao;
@@ -48,15 +49,17 @@ public class Login extends AppCompatActivity {
                             System.out.println(response);
                             try {
                                 JSONObject object = new JSONObject(response);
+                                LoginResponse lr = new LoginResponse(
+                                        object.getInt("rsp"),
+                                        object.getString("token"),
+                                        object.getString("username"),
+                                        object.getInt("userType"),
+                                        object.getString("nombreCompleto")
+                                );
                                 if (object.getInt("rsp") == 0){
-                                    new SessionControl(Login.this).saveSession(new LoginResponse(
-                                            object.getInt("rsp"),
-                                            object.getString("token"),
-                                            object.getString("username"),
-                                            object.getInt("userType"),
-                                            object.getString("nombreCompleto")
-                                    ));
+                                    new SessionControl(Login.this).saveSession(lr);
                                     startActivity(new Intent(Login.this, MainActivity.class));
+                                    new DbLite(Login.this, null, null, 1).RegistrarInfoUsuario(lr);
                                     finish();
                                 }else{
                                     Toast.makeText(Login.this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
