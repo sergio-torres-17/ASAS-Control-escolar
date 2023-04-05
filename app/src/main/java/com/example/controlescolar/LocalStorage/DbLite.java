@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
 import com.example.controlescolar.Model.LoginResponse;
+import com.example.controlescolar.Model.UserInformation;
 import com.example.controlescolar.Tools.ToolsDateAndTime;
 
 public class DbLite extends SQLiteOpenHelper {
@@ -30,6 +31,7 @@ public class DbLite extends SQLiteOpenHelper {
         ContentValues cv;
         cv = new ContentValues();
         cv.put("NombreCompleto", response.getNombreCompleto());
+        cv.put("NombreUsuario", response.getUsername());
         cv.put("UserType", (response.getTypeUser()==1150)?"Estudiante": "Profesor");
         cv.put("DateExpiration", ToolsDateAndTime.GetDateExpirationSession());
         db.insert("INFO_USER", null,cv);
@@ -41,6 +43,19 @@ public class DbLite extends SQLiteOpenHelper {
         Cursor c = db.query("INFO_USER",new String[]{"NombreCompleto"}, null,null,null,null,null);
         dev = c.getCount()>0;
         c.close();
+        return dev;
+    }
+    public UserInformation getInformationCurrentUser(){
+        UserInformation dev = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query("INFO_USER",new String[]{"NombreCompleto","NombreUsuario","UserType","DateExpiration"}, null,null,null,null,null);
+        if (c.moveToFirst()){
+            dev = new UserInformation(
+                    c.getString(0)
+                    ,c.getString(2)
+                    ,c.getString(1)
+            );
+        }
         return dev;
     }
 }

@@ -19,12 +19,16 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(HomeViewModel.class);
-
+        homeViewModel.setContext(this.getContext());
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView txtName = binding.txtNombre;
+        final TextView txtUserName = binding.txtUsuario;
+        final TextView txtType = binding.txtTipo;
+        homeViewModel.getName().observe(getViewLifecycleOwner(), txtName::setText);
+        homeViewModel.getUserName().observe(getViewLifecycleOwner(), txtUserName::setText);
+        homeViewModel.getUserType().observe(getViewLifecycleOwner(), txtType::setText);
         return root;
     }
 
