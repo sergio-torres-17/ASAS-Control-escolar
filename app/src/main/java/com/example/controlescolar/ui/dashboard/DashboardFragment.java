@@ -31,7 +31,6 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        textView = binding.textDashboard;
         btn = binding.button;
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +45,6 @@ public class DashboardFragment extends Fragment {
                 integrator.initiateScan();
             }
         });
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
     @Override

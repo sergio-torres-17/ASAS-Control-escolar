@@ -1,15 +1,26 @@
 package com.example.controlescolar.Model;
 
 public class UserInformation {
-    public UserInformation(String nombreCompleto, String tipoUsuario, String nombreUsuario) {
+    public UserInformation(String nombreCompleto, String tipoUsuario, String nombreUsuario, String token) {
         NombreCompleto = nombreCompleto;
         this.tipoUsuario = tipoUsuario;
         this.nombreUsuario = nombreUsuario;
+        this.token = token;
     }
 
     private String NombreCompleto;
     private String tipoUsuario;
     private String nombreUsuario;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    private String token;
 
 
     public String getNombreCompleto() {

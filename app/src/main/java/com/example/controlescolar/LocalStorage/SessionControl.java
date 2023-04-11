@@ -17,6 +17,7 @@ public class SessionControl {
     public void saveSession(LoginResponse response){
         SharedPreferences.Editor edit = preferences.edit();
         edit.putString("token", response.getToken());
+        System.out.println("Guardando token "+response.getToken());
     }
     public String GetTokenSession(){
         return this.preferences.getString("token", "");

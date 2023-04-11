@@ -9,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.controlescolar.LocalStorage.DbLite;
 import com.example.controlescolar.LocalStorage.SessionControl;
 import com.example.controlescolar.Ws.Objects.ObjParam;
 import java.util.HashMap;
@@ -70,9 +71,13 @@ public abstract class ClassBaseWebService {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 if (needAuth){
                     Map<String,String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer "+new SessionControl(context).GetTokenSession());
+                    System.out.println("Token "+new DbLite(context, "", null, 1).getInformationCurrentUser().getToken());
+                    headers.put("Authorization", "Bearer "+new DbLite(context, "", null, 1).getInformationCurrentUser().getToken());
+                    return headers;
+                }else {
+                    return super.getHeaders();
                 }
-                return super.getHeaders();
+
             }
         };
         RequestQueue queue = Volley.newRequestQueue(context);

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.example.controlescolar.Ws.Dao;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.Nullable;
@@ -17,6 +19,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.controlescolar.databinding.ActivityMainBinding;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +51,19 @@ public class MainActivity extends AppCompatActivity {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cencelado", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Desde aqui prroooooo!!!: " + result.getContents(), Toast.LENGTH_LONG).show();
+                new Dao(MainActivity.this).insertarAsistencia(new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            if (response.length() > 0){
+                                Toast.makeText(MainActivity.this, obj.getString("msg"), Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            System.err.println(e.getMessage());
+                        }
+                    }
+                }, result.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

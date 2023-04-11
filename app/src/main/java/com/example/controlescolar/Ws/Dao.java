@@ -3,6 +3,7 @@ package com.example.controlescolar.Ws;
 import android.content.Context;
 
 import com.android.volley.Response;
+import com.example.controlescolar.LocalStorage.DbLite;
 import com.example.controlescolar.Ws.Objects.ObjParam;
 
 public class Dao extends ClassBaseWebService {
@@ -19,5 +20,13 @@ public class Dao extends ClassBaseWebService {
                         new ObjParam("Password", password)
         },
                 this.context);
+    }
+    public void insertarAsistencia(Response.Listener<String> listener, String codigoClase){
+        PostRequest("InsertarAsistencia", listener,
+                new ObjParam[]{
+                        new ObjParam("CodigoClase", codigoClase),
+                        new ObjParam("NombreAlumno", new DbLite(this.context, "",null, 1).getInformationCurrentUser().getNombreCompleto())
+                },true ,this.context
+                );
     }
 }

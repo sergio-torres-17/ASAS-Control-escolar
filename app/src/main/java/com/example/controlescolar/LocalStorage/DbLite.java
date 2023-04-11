@@ -32,6 +32,7 @@ public class DbLite extends SQLiteOpenHelper {
         cv = new ContentValues();
         cv.put("NombreCompleto", response.getNombreCompleto());
         cv.put("NombreUsuario", response.getUsername());
+        cv.put("Token", response.getToken());
         cv.put("UserType", (response.getTypeUser()==1150)?"Estudiante": "Profesor");
         cv.put("DateExpiration", ToolsDateAndTime.GetDateExpirationSession());
         db.insert("INFO_USER", null,cv);
@@ -48,14 +49,18 @@ public class DbLite extends SQLiteOpenHelper {
     public UserInformation getInformationCurrentUser(){
         UserInformation dev = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query("INFO_USER",new String[]{"NombreCompleto","NombreUsuario","UserType","DateExpiration"}, null,null,null,null,null);
+        Cursor c = db.query("INFO_USER",new String[]{"NombreCompleto","NombreUsuario","Token","UserType","DateExpiration"}, null,null,null,null,null);
         if (c.moveToFirst()){
             dev = new UserInformation(
                     c.getString(0)
-                    ,c.getString(2)
                     ,c.getString(1)
+                    ,c.getString(3)
+                    ,c.getString(2)
             );
+            System.out.println("Token extraido de base de datos: "+c.getString(2));
+
         }
+        c.close();
         return dev;
     }
 }
