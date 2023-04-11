@@ -1,9 +1,8 @@
 package com.example.controlescolar;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import com.example.controlescolar.LocalStorage.SessionControl;
 import com.example.controlescolar.Model.LoginResponse;
 import com.example.controlescolar.Ws.Dao;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
