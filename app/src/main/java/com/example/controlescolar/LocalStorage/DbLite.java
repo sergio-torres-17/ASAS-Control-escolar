@@ -63,4 +63,9 @@ public class DbLite extends SQLiteOpenHelper {
         c.close();
         return dev;
     }
+    public void logout(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM INFO_USER");
+        db.close();
+    }
 }
