@@ -86,4 +86,21 @@ public abstract class ClassBaseWebService {
         queue.getCache().clear();
         queue.add(sr);
     }
+    public String getEntornoApp(){
+        switch (URL_BASE_WEB_SERVICES){
+            case URL_BASE_WEB_SERVICES_DEV_LOCAL:{
+                return "Versión 1.0 Entorno de pruebas Local ";
+            }
+            case URL_BASE_WEB_SERVICES_PRD_GLOBAL:{
+                return "Versión 1.0 Entorno de producción ";
+            }
+            case URL_BASE_WEB_SERVICES_PRD_LOCAL:{
+                return "Versión 1.0 Entorno de pruebas Local secundario";
+            }
+            default:{
+                return "Not Environment Detected!";
+            }
+        }
+    }
+
 }
