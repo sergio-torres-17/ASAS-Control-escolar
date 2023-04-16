@@ -19,7 +19,7 @@ public abstract class ClassBaseWebService {
     private static final String URL_BASE_WEB_SERVICES_DEV_LOCAL = "https://localhost:7297/api/";
     private static final String URL_BASE_WEB_SERVICES_PRD_LOCAL = "http://192.168.0.173:8024/api/";
     private static final String URL_BASE_WEB_SERVICES_PRD_GLOBAL = "http://mrsergiotorres17-001-site1.itempurl.com/api/";
-    private static final String URL_BASE_WEB_SERVICES = URL_BASE_WEB_SERVICES_PRD_LOCAL;
+    private static final String URL_BASE_WEB_SERVICES = URL_BASE_WEB_SERVICES_PRD_GLOBAL;
     public void GetRequest(String url, Response.Listener<String> eventResponse, ObjParam[] parameters, Context context){
         StringRequest sr = new StringRequest(Request.Method.GET, URL_BASE_WEB_SERVICES+url, eventResponse, error -> System.err.println("Ha ocurrido un error al hacer la petición: "+error.getMessage())){
             @Override

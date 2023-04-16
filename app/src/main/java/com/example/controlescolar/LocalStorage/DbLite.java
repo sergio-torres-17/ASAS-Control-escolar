@@ -36,6 +36,7 @@ public class DbLite extends SQLiteOpenHelper {
         cv.put("UserType", (response.getTypeUser()==1150)?"Estudiante": "Profesor");
         cv.put("DateExpiration", ToolsDateAndTime.GetDateExpirationSession());
         db.insert("INFO_USER", null,cv);
+        db.close();
     }
     public boolean isLogged(){
         boolean dev;
@@ -44,6 +45,7 @@ public class DbLite extends SQLiteOpenHelper {
         Cursor c = db.query("INFO_USER",new String[]{"NombreCompleto"}, null,null,null,null,null);
         dev = c.getCount()>0;
         c.close();
+        db.close();
         return dev;
     }
     public UserInformation getInformationCurrentUser(){
@@ -53,14 +55,15 @@ public class DbLite extends SQLiteOpenHelper {
         if (c.moveToFirst()){
             dev = new UserInformation(
                     c.getString(0)
-                    ,c.getString(1)
                     ,c.getString(3)
+                    ,c.getString(1)
                     ,c.getString(2)
             );
             System.out.println("Token extraido de base de datos: "+c.getString(2));
 
         }
         c.close();
+        db.close();
         return dev;
     }
     public void logout(){

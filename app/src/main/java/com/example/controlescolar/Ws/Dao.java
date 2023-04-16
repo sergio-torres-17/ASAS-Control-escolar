@@ -29,4 +29,12 @@ public class Dao extends ClassBaseWebService {
                 },true ,this.context
                 );
     }
+    public void insertarAsistenciaProfesor(Response.Listener<String> listener, String codigoClase){
+        PostRequest("InsertarAsistenciaProfesor", listener,
+                new ObjParam[]{
+                        new ObjParam("CodigoClase", codigoClase),
+                        new ObjParam("NombreProfesor", new DbLite(this.context, "",null, 1).getInformationCurrentUser().getNombreCompleto())
+                },true ,this.context
+        );
+    }
 }
